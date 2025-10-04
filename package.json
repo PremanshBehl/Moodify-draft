@@ -8,8 +8,8 @@
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
     "backend": "cd backend && node server.js",
     "frontend": "cd frontend && npm run dev",
-    "build": "cd frontend && npm run build",
-    "vercel-build": "cd frontend && npm run build"
+    "build": "echo 'Backend only build'",
+    "vercel-build": "echo 'Backend only build'"
   },
   "dependencies": {
     "concurrently": "^8.2.2"
