@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  spotifyId   String   @unique
+  displayName String?
+  email       String?
+  accessToken String?
+  refreshToken String?
+  mood        String?
+  language    String?
+  playlists   Playlist[]
+  favorites   Favorite[]
+  history     History[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Playlist {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String   @db.ObjectId
+  mood             String?
+  language         String?
+  spotifyPlaylistId String?
+  name             String?
+  createdAt        DateTime @default(now())
+  user             User     @relation(fields: [userId], references: [id])
+
+  @@map("playlists")
+}
+
+model Favorite {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  trackId   String
+  trackName String
+  artist    String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("favorites")
+}
+
+model History {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  action    String
+  details   String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("history")
+}
