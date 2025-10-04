@@ -11,5 +11,10 @@
       "src": "/api/(.*)",
       "dest": "backend/server.js"
     }
-  ]
+  ],
+  "functions": {
+    "backend/server.js": {
+      "includeFiles": "backend/**"
+    }
+  }
 }
